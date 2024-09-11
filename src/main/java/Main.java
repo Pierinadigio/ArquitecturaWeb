@@ -1,23 +1,13 @@
-import dbHelper.Derbyhelper;
 import dbHelper.MySQLhelper;
 import entidades.Cliente;
-import entidades.Factura;
-import entidades.Factura_Producto;
 import entidades.Producto;
 import factory.DAOfactory;
-import factory.DerbyDAOFactory;
 import factory.MySQLDAOFactory;
-import implementaciones.MySQLClienteDAO;
 import interfaces.ClienteDAO;
 import interfaces.FacturaDAO;
 import interfaces.Factura_ProductoDAO;
 import interfaces.ProductoDAO;
 import services.Service;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import java.sql.Connection;
 import java.util.List;
 
 public class Main {
@@ -41,8 +31,7 @@ public class Main {
         MySQLhelper helper = new MySQLhelper((MySQLDAOFactory) daoFactory);
         //creo heleper para DErby
    //   Derbyhelper helper = new Derbyhelper((DerbyDAOFactory) daoFactory);
-
-        helper.createTableProducto();
+      /*  helper.createTableProducto();
         helper.createTableCliente();
         helper.createTableFactura();
         helper.createTableFacturaProducto();
@@ -51,7 +40,7 @@ public class Main {
         helper.loadClientesFromCSV(csvClientes);
         helper.loadFacturasFromCSV(csvFacturas);
         helper.loadProductosFromCSV(csvProductos);
-        helper.loadFacturas_ProductosFromCSV(csvFacturaProductos);
+        helper.loadFacturas_ProductosFromCSV(csvFacturaProductos);*/
 
         //SERVICIOS
         Service service = new Service(productoDAO, clienteDAO, facturaDAO, factura_productoDAO);
