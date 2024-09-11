@@ -23,7 +23,6 @@ public class DerbyProductoDAO implements ProductoDAO {
     }
 
 
-
     @Override
     public void addProducto(Producto producto) {
         String insertSQL = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
@@ -38,37 +37,8 @@ public class DerbyProductoDAO implements ProductoDAO {
         }
     }
 
-    // Metodo para cargar datos desde CSV
-    public void loadProductosFromCSV(String csvFilePath) {
-        String insertSQL = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ? , ?)";
-        try (FileReader reader = new FileReader(csvFilePath);
-             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader("idProducto", "nombre", "valor").withIgnoreHeaderCase().withTrim());
-             PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 
-            connection.setAutoCommit(false);
-
-            for (CSVRecord record : parser) {
-                int idProducto = Integer.parseInt(record.get("idProducto"));
-                String nombre = record.get("nombre");
-                float valor = Float.parseFloat(record.get("valor"));
-
-                pstmt.setInt(1, idProducto);
-                pstmt.setString(2, nombre);
-                pstmt.setFloat(3, valor);
-
-                pstmt.addBatch();
-            }
-            pstmt.executeBatch();
-            connection.commit();
-            System.out.println("Datos de Productos  cargados desde CSV a Derby.");
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-        @Override
-        public List<Producto> getAllProductos() {
+    public List<Producto> getAllProductos() {
             String selectSQL = "SELECT * FROM Producto";
             List<Producto> productos = new ArrayList<>();
             try (PreparedStatement pstmt = connection.prepareStatement(selectSQL);
@@ -85,6 +55,7 @@ public class DerbyProductoDAO implements ProductoDAO {
             return productos;
         }
 
+    //PUNTO 3 Integrador 1
     public Producto getProductoConMayorRecaudacion() {
         String query = "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS total_recaudacion " +
                 "FROM Producto p " +
@@ -107,8 +78,9 @@ public class DerbyProductoDAO implements ProductoDAO {
         }
         return null;
     }
-        // Método para borrar la tabla
-        public void dropTable()  {
+
+    // Método para borrar la tabla
+    public void dropTable()  {
             String sql = "DROP TABLE Producto";
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute(sql);

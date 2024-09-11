@@ -18,16 +18,6 @@ public class MySQLClienteDAO implements ClienteDAO {
         this.connection = connection;
     }
 
- /*
-    public void createTable() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Cliente (idCliente INT, nombre VARCHAR (500), email VARCHAR (150), PRIMARY KEY(idCliente))";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(createTableSQL);
-            System.out.println("Tabla Cliente creada con exito en myqsl.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public void addCliente(Cliente cliente) {
@@ -62,16 +52,7 @@ public class MySQLClienteDAO implements ClienteDAO {
         return clientes;
     }
 
-    // Método para borrar la tabla
-    public void dropTable()  {
-        String sql = "DROP TABLE IF EXISTS Cliente";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(sql);
-        }  catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
- //Punto 3 Integrador1
+    //Punto 4 Integrador1
     public List<Cliente> getClientesPorFacturacion() {
         List<Cliente> clientes = new ArrayList<>();
         String query = "SELECT c.idCliente, c.nombre, SUM(fp.cantidad * p.valor) AS recaudacion " +
@@ -98,5 +79,15 @@ public class MySQLClienteDAO implements ClienteDAO {
             e.printStackTrace();
         }
         return clientes;
+    }
+
+    // Método para borrar la tabla
+    public void dropTable()  {
+        String sql = "DROP TABLE IF EXISTS Cliente";
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(sql);
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

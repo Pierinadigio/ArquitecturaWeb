@@ -18,8 +18,6 @@ public class DerbyFactura_ProductoDAO implements Factura_ProductoDAO {
     }
 
 
-
-    @Override
     public void addFacturaProducto(Factura_Producto fp) {
         String insertSQL = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
@@ -33,36 +31,6 @@ public class DerbyFactura_ProductoDAO implements Factura_ProductoDAO {
         }
     }
 
-    // Metodo para cargar datos desde CSV
-    public void loadFacturas_ProductosFromCSV(String csvFilePath) {
-        String insertSQL = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
-        try (FileReader reader = new FileReader(csvFilePath);
-             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader("idFactura", "idProducto", "cantidad").withIgnoreHeaderCase().withTrim());
-             PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-
-            connection.setAutoCommit(false);
-
-            for (CSVRecord record : parser) {
-                int idFactura = Integer.parseInt(record.get("idFactura"));
-                int idProducto = Integer.parseInt(record.get("idProducto"));
-                int cantidad = Integer.parseInt(record.get("cantidad"));
-
-                pstmt.setInt(1, idFactura);
-                pstmt.setInt(2, idProducto);
-                pstmt.setInt(3, cantidad);
-                pstmt.addBatch();
-            }
-
-            pstmt.executeBatch();
-            connection.commit();
-            System.out.println("Datos de Facturas_Productos  cargados desde CSV a Derby.");
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public List<Factura_Producto> getAllFacturasProductos() {
         String selectSQL = "SELECT * FROM Factura_Producto";
         List<Factura_Producto> factura_productos = new ArrayList<>();

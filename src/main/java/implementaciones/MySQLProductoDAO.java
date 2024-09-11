@@ -22,18 +22,6 @@ public class MySQLProductoDAO implements ProductoDAO {
         this.connection = connection;
     }
 
-    /*
-    public void createTable() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Producto (idProducto INT, nombre VARCHAR (45), valor FLOAT, PRIMARY KEY(idProducto))";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(createTableSQL);
-            System.out.println("Tabla Producto creada en MySQL.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    @Override
     public void addProducto(Producto producto) {
         String insertSQL = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
@@ -64,6 +52,7 @@ public class MySQLProductoDAO implements ProductoDAO {
         return productos;
     }
 
+    //PUNTO 3 Integrador 1
     public Producto getProductoConMayorRecaudacion() {
         String query = "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS total_recaudacion " +
                 "FROM Producto p " +

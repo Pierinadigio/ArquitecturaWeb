@@ -18,8 +18,6 @@ public class DerbyClienteDAO implements ClienteDAO {
     }
 
 
-
-    @Override
     public void addCliente(Cliente c) {
         String insertSQL = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
@@ -33,35 +31,7 @@ public class DerbyClienteDAO implements ClienteDAO {
         }
     }
 
-    // Metodo para cargar datos desde CSV
-    public void loadClientesFromCSV(String csvFilePath) {
-        String insertSQL = "INSERT INTO Cliente  (idCliente, nombre, email) VALUES (?, ?, ?)";
-        try (FileReader reader = new FileReader(csvFilePath);
-             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader("idCliente", "nombre", "email").withIgnoreHeaderCase().withTrim());
-             PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-            connection.setAutoCommit(false);
 
-            for (CSVRecord record : parser) {
-                int idCliente = Integer.parseInt(record.get("idCliente"));
-                String nombre = record.get("nombre");
-                String email = record.get("email");
-
-                pstmt.setInt(1, idCliente);
-                pstmt.setString(2, nombre);
-                pstmt.setString(3, email);
-                pstmt.addBatch();
-            }
-            pstmt.executeBatch();
-            connection.commit();
-            System.out.println("Datos de clientes cargados desde CSV a Derby.");
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-  @Override
     public List<Cliente> getAllClientes() {
         String selectSQL = "SELECT * FROM Cliente";
         List<Cliente> customers = new ArrayList<>();
@@ -79,15 +49,8 @@ public class DerbyClienteDAO implements ClienteDAO {
         return customers;
     }
 
-    // Método para borrar la tabla
-    public void dropTable()  {
-        String sql = "DROP TABLE Cliente";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(sql);
-        }  catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+    //Punto 4 Integrador1
     public List<Cliente> getClientesPorFacturacion() {
         List<Cliente> clientes = new ArrayList<>();
         String query = "SELECT c.idCliente, c.nombre, SUM(fp.cantidad * p.valor) AS recaudacion " +
@@ -114,5 +77,15 @@ public class DerbyClienteDAO implements ClienteDAO {
             e.printStackTrace();
         }
         return clientes;
+    }
+
+    // Método para borrar la tabla
+    public void dropTable()  {
+        String sql = "DROP TABLE Cliente";
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(sql);
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -22,7 +22,6 @@ public class DerbyFacturaDAO implements FacturaDAO {
     }
 
 
-    @Override
     public void addFactura(Factura factura) {
         String insertSQL = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
@@ -35,32 +34,7 @@ public class DerbyFacturaDAO implements FacturaDAO {
         }
     }
 
-    // Metodo para cargar datos desde CSV
-    public void loadFacturasFromCSV(String csvFilePath) {
-        String insertSQL = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
-        try (FileReader reader = new FileReader(csvFilePath);
-             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader("idFactura", "idCliente").withIgnoreHeaderCase().withTrim());
-             PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 
-            connection.setAutoCommit(false);
-
-            for (CSVRecord record : parser) {
-                int idFactura = Integer.parseInt(record.get("idFactura"));
-                int idCliente = Integer.parseInt(record.get("idCliente"));
-
-                pstmt.setInt(1, idFactura);
-                pstmt.setInt(2, idCliente);
-
-                pstmt.addBatch();
-            }
-            pstmt.executeBatch();
-            connection.commit();
-            System.out.println("Datos de Facturas  cargados desde CSV a Derby.");
-
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
     @Override
     public List<Factura> getAllFacturas() {
         String selectSQL = "SELECT * FROM Factura";
@@ -77,6 +51,7 @@ public class DerbyFacturaDAO implements FacturaDAO {
         }
         return facturas;
     }
+
     // Método para borrar la tabla
     public void dropTable()  {
         String sql = "DROP TABLE Factura";

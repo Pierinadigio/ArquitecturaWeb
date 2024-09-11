@@ -36,7 +36,7 @@ public class Derbyhelper {
     }
     public Connection getConnection() {
         try {
-            return daoFactory.getConnection(); // Asegúrate de que MySQLDAOFactory tenga este método
+            return daoFactory.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -6,5 +6,5 @@ public interface ProductoDAO {
     void addProducto(Producto p);
     List<Producto> getAllProductos();
     Producto getProductoConMayorRecaudacion();
-
+    void dropTable();
 }

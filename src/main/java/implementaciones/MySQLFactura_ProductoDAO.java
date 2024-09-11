@@ -18,8 +18,7 @@ public class MySQLFactura_ProductoDAO implements Factura_ProductoDAO{
     }
 
 
-
-    @Override
+   @Override
     public void addFacturaProducto(Factura_Producto fp) {
         String insertSQL = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
@@ -33,9 +32,7 @@ public class MySQLFactura_ProductoDAO implements Factura_ProductoDAO{
         }
     }
 
-    // Metodo para cargar datos desde CSV
 
-    @Override
     public List<Factura_Producto> getAllFacturasProductos() {
         String selectSQL = "SELECT * FROM Factura_Producto";
         List<Factura_Producto> factura_productos = new ArrayList<>();

@@ -23,17 +23,6 @@ public class MySQLFacturaDAO implements FacturaDAO {
         this.connection = connection;
     }
 
-    /*
-    public void createTable() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Factura (idFactura INT, idCliente INT, PRIMARY KEY(idFactura))";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(createTableSQL);
-            System.out.println("Tabla Factura creada en MySQL con exito.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     @Override
     public void addFactura(Factura factura) {
         String insertSQL = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
@@ -47,10 +36,7 @@ public class MySQLFacturaDAO implements FacturaDAO {
         }
     }
 
-    // Metodo para cargar datos desde CSV
-
-    @Override
-    public List<Factura> getAllFacturas() {
+   public List<Factura> getAllFacturas() {
         String selectSQL = "SELECT * FROM Factura";
         List<Factura> facturas = new ArrayList<>();
         try (PreparedStatement pstmt = connection.prepareStatement(selectSQL);

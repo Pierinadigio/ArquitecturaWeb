@@ -63,7 +63,7 @@ public class MySQLDAOFactory extends DAOfactory {
             return new MySQLFactura_ProductoDAO(getConnection());
         } catch (SQLException e) {
             e.printStackTrace();
-            return null; // Maneja la excepción de acuerdo a tus necesidades
+            return null;
         }
     }
 }
