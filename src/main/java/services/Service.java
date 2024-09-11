@@ -1,4 +1,6 @@
 package services;
+import DTO.ClienteDTO;
+import DTO.ProductoDTO;
 import dbHelper.MySQLhelper;
 import entidades.Cliente;
 import entidades.Factura;
@@ -70,13 +72,14 @@ public class Service {
 
 
     //PUNTO 3 Integrador1
-    public Producto getProductoConMayorRecaudacion() {
+    public ProductoDTO getProductoConMayorRecaudacion() {
 
         return productoDAO.getProductoConMayorRecaudacion();
     }
 
     //PUNTO 4 Integrador1
-    public List<Cliente> getClientesPorFacturacion(){
+    public List<ClienteDTO> getClientesPorFacturacion(){
+
         return clienteDAO.getClientesPorFacturacion();
     }
 

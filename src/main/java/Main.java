@@ -1,3 +1,5 @@
+import DTO.ClienteDTO;
+import DTO.ProductoDTO;
 import dbHelper.MySQLhelper;
 import entidades.Cliente;
 import entidades.Producto;
@@ -27,11 +29,11 @@ public class Main {
         FacturaDAO facturaDAO = daoFactory.getFacturaDAO();
         Factura_ProductoDAO factura_productoDAO = daoFactory.getFactura_ProductoDAO();
 
-        //creo helper para MySQL
+        //Instancio helper para MySQL
         MySQLhelper helper = new MySQLhelper((MySQLDAOFactory) daoFactory);
-        //creo heleper para DErby
+        //Instancio helper para Derby
    //   Derbyhelper helper = new Derbyhelper((DerbyDAOFactory) daoFactory);
-      /*  helper.createTableProducto();
+        helper.createTableProducto();
         helper.createTableCliente();
         helper.createTableFactura();
         helper.createTableFacturaProducto();
@@ -40,26 +42,26 @@ public class Main {
         helper.loadClientesFromCSV(csvClientes);
         helper.loadFacturasFromCSV(csvFacturas);
         helper.loadProductosFromCSV(csvProductos);
-        helper.loadFacturas_ProductosFromCSV(csvFacturaProductos);*/
+        helper.loadFacturas_ProductosFromCSV(csvFacturaProductos);
 
         //SERVICIOS
         Service service = new Service(productoDAO, clienteDAO, facturaDAO, factura_productoDAO);
 
        // PUNTO 3: Obtener el producto con mayor recaudación
-        Producto productoConMayorRecaudacion = service.getProductoConMayorRecaudacion();
+        ProductoDTO productoConMayorRecaudacion = service.getProductoConMayorRecaudacion();
         if (productoConMayorRecaudacion != null) {
             System.out.println("PRODUCTO CON MAYOR RECAUDACION:");
             System.out.println("ID: " + productoConMayorRecaudacion.getIdProducto());
             System.out.println("Nombre: " + productoConMayorRecaudacion.getNombre());
-            System.out.println("Recaudación: " + productoConMayorRecaudacion.getValor());
+            System.out.println("Recaudación: " + productoConMayorRecaudacion.getTotalRecaudacion());
         } else {
             System.out.println("No se encontró ningún producto.");
         }
 
         // PUNTO 4: Obtener la lista de clientes ordenados por facturación
-        List<Cliente> clientes = service.getClientesPorFacturacion();
+        List<ClienteDTO> clientes = service.getClientesPorFacturacion();
         System.out.println("LISTADO DE CLIENTES ORDENADO POR FACTURACIÓN:  ");
-        for (Cliente cliente : clientes) {
+        for (ClienteDTO cliente : clientes) {
             System.out.printf("ID: %d, Nombre: %s, Recaudación: %.2f%n",
                     cliente.getIdCliente(), cliente.getNombre(), cliente.getRecaudacion());
         }

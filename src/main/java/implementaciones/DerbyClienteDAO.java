@@ -1,4 +1,5 @@
 package implementaciones;
+import DTO.ClienteDTO;
 import entidades.Cliente;
 import interfaces.ClienteDAO;
 import org.apache.commons.csv.CSVFormat;
@@ -51,8 +52,8 @@ public class DerbyClienteDAO implements ClienteDAO {
 
 
     //Punto 4 Integrador1
-    public List<Cliente> getClientesPorFacturacion() {
-        List<Cliente> clientes = new ArrayList<>();
+    public List<ClienteDTO> getClientesPorFacturacion() {
+        List<ClienteDTO> clientes = new ArrayList<>();
         String query = "SELECT c.idCliente, c.nombre, SUM(fp.cantidad * p.valor) AS recaudacion " +
                 "FROM Cliente c " +
                 "JOIN Factura f ON c.idCliente = f.idCliente " +
@@ -69,7 +70,7 @@ public class DerbyClienteDAO implements ClienteDAO {
                 String nombre = rs.getString("nombre");
                 float recaudacion = rs.getFloat("recaudacion");
 
-                Cliente c = new Cliente(idCliente, nombre, recaudacion);
+                ClienteDTO c = new ClienteDTO(idCliente, nombre, recaudacion);
                 clientes.add(c);
             }
 

@@ -1,10 +1,11 @@
 package interfaces;
+import DTO.ProductoDTO;
 import entidades.Producto;
 import java.util.List;
 
 public interface ProductoDAO {
     void addProducto(Producto p);
     List<Producto> getAllProductos();
-    Producto getProductoConMayorRecaudacion();
+    ProductoDTO getProductoConMayorRecaudacion();
     void dropTable();
 }

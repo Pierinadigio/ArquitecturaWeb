@@ -1,4 +1,5 @@
 package implementaciones;
+import DTO.ProductoDTO;
 import entidades.Producto;
 import interfaces.ProductoDAO;
 import org.apache.commons.csv.CSVFormat;
@@ -56,7 +57,7 @@ public class DerbyProductoDAO implements ProductoDAO {
         }
 
     //PUNTO 3 Integrador 1
-    public Producto getProductoConMayorRecaudacion() {
+    public ProductoDTO getProductoConMayorRecaudacion() {
         String query = "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS total_recaudacion " +
                 "FROM Producto p " +
                 "JOIN Factura_Producto fp ON fp.idProducto = p.idProducto " +
@@ -70,7 +71,7 @@ public class DerbyProductoDAO implements ProductoDAO {
                 int idProducto = rs.getInt("idProducto");
                 String nombre = rs.getString("nombre");
                 float totalRecaudacion = rs.getFloat("total_recaudacion");
-                return new Producto(idProducto, nombre, totalRecaudacion);
+                return new ProductoDTO(idProducto, nombre, totalRecaudacion);
             }
 
         } catch (SQLException e) {

@@ -4,7 +4,6 @@ public class Cliente {
     private int idCliente;
     private String nombre;
     private String email;
-    private float recaudacion;
 
     // Constructor
     public Cliente(int idCliente, String nombre, String email) {
@@ -13,11 +12,6 @@ public class Cliente {
         this.email = email;
     }
 
-    public Cliente(int idCliente, String nombre, Float recaudacion) {
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.recaudacion = recaudacion;
-    }
     public int getIdCliente() {
         return idCliente;
     }
@@ -42,8 +36,6 @@ public class Cliente {
         this.email = email;
     }
 
-    public float getRecaudacion() {
-        return recaudacion; }
 
 
 }
